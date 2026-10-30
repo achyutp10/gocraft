@@ -1,0 +1,45 @@
+package main
+
+import "fmt"
+
+type EmployeeGoogle struct {
+    FirstName string
+    LastName string
+    Age int
+    
+}
+
+type EmployeeMeta struct {
+    FirstName string
+    LastName string
+    Age int
+}
+
+func main() {
+    // Pascal Case: Each word in the identifier starts with a capital letter. This convention is often used for naming types, structs, and exported functions in Go.
+	// Structs, interfaces, enums Eg: CalculateArea, UserProfile, OrderStatus
+	// Camel Case: The first word starts with a lowercase letter, and each subsequent word starts with a capital letter. This convention is commonly used for naming variables, functions, and methods in Go.
+	// Variables, functions, methods Eg: calculateArea, userProfile, orderStatus
+	// Kebab Case: Words are separated by hyphens. This convention is not commonly used in Go but can be seen in some cases, such as naming files or URLs.
+	// Files, URLs Eg: calculate-area.go, user-profile.html, order-status.json
+
+	// Snake Case: Words are separated by underscores. This convention is less common in Go but can be used for naming variables and functions.
+	// Variables, functions Eg: calculate_area, user_profile, order_status, http_request, json_response
+
+	// Uppercase Case: Similar to snake case, but all letters are capitalized. This convention is often used for naming constants in Go.
+	// Constants Eg: MAX_VALUE, DEFAULT_TIMEOUT, API_KEY
+
+	// Mixed Case: A combination of uppercase and lowercase letters without any separators. This convention is not commonly used in Go but can be seen in some cases, such as naming acronyms or abbreviations.
+	// Acronyms, abbreviations Eg: htmlDocument, jsonResponse, apiKey, javaScriptObject
+
+    const MAXRETRIES = 5
+
+    var employeeID int = 12345
+    Employee := EmployeeGoogle {
+        FirstName: "xyz", 
+        LastName: "wer",
+        Age: 30,
+    }
+
+    fmt.Println("Employee Details for google: ", employeeID, Employee.FirstName, Employee.LastName, Employee.Age)
+}

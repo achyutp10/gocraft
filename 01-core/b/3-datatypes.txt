@@ -1,0 +1,20 @@
+package main
+
+import "fmt"
+
+func main() {
+    fmt.println("Integers: ", 42)
+    fmt.println("Floating Point Numbers: ", 3.14)
+    fmt.println("Booleans: ", true)
+    fmt.println("Stings: ", "Hello World")
+    fmt.println("Complex Numbers: ", 3+4i)
+    fmt.println("Constangs", 3.14, "Pi")
+    fmt.println("Arrays": [3]int{1,2,3})
+    fmt.println("Structs: ", struct{Name string} {Name: "John"})
+    fmt.println("Pointers: ", new(int))
+    fmt.println("Maps: " map[string] int{"John": 25})
+    fmt.println("Functions: ", func() {})
+    fmt.println("Channels: ", make(chan int))
+    fmt.println("JSON: ",  `{"name": "John", "age": 30}`)
+    fmt.println("Text and HTML Elements: ", "<h1>Hello, World!</h1>")
+}

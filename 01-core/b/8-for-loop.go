@@ -1,0 +1,47 @@
+package basic
+
+import "fmt"
+
+func main() {
+	for i := 0; i < 5; i++ {
+		fmt.Println(i)
+	}
+
+	// iterate over collection
+
+	numbers := []int{1, 2, 3, 4, 5}
+
+	for index, value := range numbers {
+		fmt.Printf("Index: %d, Value: %d\n", index, value)
+	}
+
+	for i := 1; i <= 10; i++ {
+		if i%2 == 0 {
+			continue // skip even numbers
+		}
+		fmt.Println(i, "is odd")
+		if i == 5 {
+			break // exit the loop when i is 5
+		}
+	}
+
+	rows := 5
+	// Outer loop
+	for i := 1; i <= rows; i++ {
+		// Inner Loop for spaces before stars
+		for j := 1; j <= rows-1; j++ {
+			fmt.Print(" ")
+		}
+		// Inner Loop for stars
+		for k := 1; k <= 2*i-1; k++ {
+			fmt.Print("*")
+		}
+		fmt.Println() // moving to next line
+	}
+
+	for i := range 10 {
+		i++
+		fmt.Println(10 - i)
+	}
+	fmt.Println("We have a lift off!")
+}

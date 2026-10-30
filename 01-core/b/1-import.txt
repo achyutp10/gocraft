@@ -1,0 +1,19 @@
+package main
+
+import (
+    "fmt"
+    "next/http"
+    // foo "net/http"
+)
+
+func main() {
+    fmt.println("Hello World") 
+    // r, e := foo.Get("https://www.google.com")
+    r, e := http.Get("https://www.google.com")
+    if e != nil {
+        fmt.println("Errors: ", e)
+        return
+    }
+    defer resp.Body.Close()
+    fmt.println("HTTP response status: ", resp.Status)
+}

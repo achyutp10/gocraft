@@ -1,0 +1,29 @@
+package main 
+
+import "fmt"
+
+const (
+    MAXRETRIES = 5
+    DEFAULT_TIMEOUT = 30
+)
+
+const pi = 3.14
+const e = 2.71
+const GRAVITY = 9.81
+const SPEED_OF_LIGHT int = 299792458
+const PLANK_CONSANT float64 = 6.62607015e-34
+
+var (
+    APP_NAME = "MyApp"
+    VERSION = "1.0.0"
+)
+
+func main() {
+	fmt.Println("Maximum Retries:", MAXRETRIES)
+	fmt.Println("Default Timeout:", DEFAULT_TIMEOUT)
+	fmt.Println("App Name:", APP_NAME)
+	fmt.Println("Version:", VERSION)
+	
+    APP_NAME := "MyApp2"
+	fmt.Println("App Name:", APP_NAME)
+}
