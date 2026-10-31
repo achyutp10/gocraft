@@ -33,5 +33,5 @@ sapi/env
 # .idea/
 # .vscode/
 
-sapi\key.pen
-sapi\cert.pen
+sapi/key.pen
+sapi/cert.pen
