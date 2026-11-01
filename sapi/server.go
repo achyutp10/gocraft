@@ -21,7 +21,7 @@ func loadClientCAs() *x509.CertPool {
 	return clientCAs
 }
 
-func main() {
+func main1() {
 
 	http.HandleFunc("/orders", func(w http.ResponseWriter, r *http.Request) {
 		logRequestDetails(r)
