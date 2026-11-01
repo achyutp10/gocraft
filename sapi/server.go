@@ -35,7 +35,7 @@ func main1() {
 
 	port := 3000
 
-	// openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pen -out cert.pen -days 365
+	// openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pem -out cert.pem -days 365
 	// openssl genpkey -algorithm RSA -out server.key -pkeyopt rsa_keygen_bits:2048
 	// openssl req -new -x509 -key server.key -out server.crt -days 365
 
