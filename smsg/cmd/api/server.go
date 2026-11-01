@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"smsg/internal/api/middlewares"
+	mv "smsg/internal/api/middlewares"
 )
 
 type user struct {
@@ -121,8 +121,10 @@ func main() {
 
 	// Create custom server
 	server := &http.Server{
-		Addr:      port,
-		Handler:   middlewares.SecurityHeaders(mux),
+		Addr: port,
+		// Handler: mux,
+		Handler: mv.SecurityHeaders(mux),
+		// Handler:   middlewares.Cors(mux),
 		TLSConfig: tlsConfig,
 	}
 
