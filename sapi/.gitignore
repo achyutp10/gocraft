@@ -34,3 +34,4 @@ sapi/env
 # .vscode/
 key.pen
 cert.pen
+openssl.cnf
