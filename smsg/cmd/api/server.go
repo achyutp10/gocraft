@@ -8,12 +8,6 @@ import (
 	mv "smsg/internal/api/middlewares"
 )
 
-type user struct {
-	Name string `json:"name"`
-	Age  string `json:"age"`
-	City string `json:"city"`
-}
-
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintf(w, "Hello Root Route")
 	w.Write([]byte("Hello Root Route"))
@@ -119,12 +113,25 @@ func main() {
 		MinVersion: tls.VersionTLS12,
 	}
 
+	// rl := mv.NewRateLimiter(5, time.Minute)
+
+	// hppOptions := mv.HPPOptions{
+	// 	CheckQuery:                  true,
+	// 	CheckBody:                   true,
+	// 	CheckBodyOnlyForContentType: "application/x-www-form-urlencoded",
+	// 	Whitelist:                   []string{"sortBy", "sortOrder", "name", "age", "class"},
+	// }
+
+	// secureMux := mv.Cors(rl.Middleware(mv.ResponseTimeMiddleware(mv.Compression(mv.SecurityHeaders(mv.Hpp(hppOptions)(mux))))))
+	// secureMux := ApplyMiddlewares(mux, mv.Hpp(hppOptions), mv.Compression, mv.SecurityHeaders, mv.ResponseTimeMiddleware, rl.Middleware, mv.Cors)
+	secureMux := mv.SecurityHeaders(mux)
+
 	// Create custom server
 	server := &http.Server{
 		Addr: port,
 		// Handler: mux,
-		Handler: mv.SecurityHeaders(mux),
-		// Handler:   middlewares.Cors(mux),
+		// Handler: mv.SecurityHeaders(mux),
+		Handler:   secureMux,
 		TLSConfig: tlsConfig,
 	}
 
@@ -134,4 +141,14 @@ func main() {
 		log.Fatalln("Error starting the server", err)
 	}
 
+}
+
+// Middleware is a function that wraps an http.Handler with additional functionality
+type Middleware func(http.Handler) http.Handler
+
+func ApplyMiddlewares(handler http.Handler, middlewares ...Middleware) http.Handler {
+	for _, middleware := range middlewares {
+		handler = middleware(handler)
+	}
+	return handler
 }
