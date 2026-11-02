@@ -17,7 +17,8 @@ var allowedOrigins = []string{
 func Cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		origin := r.Header.Get("Accept-Encoding")
+		// origin := r.Header.Get("Accept-Encoding")
+		origin := r.Header.Get("Origin")
 
 		if isOriginAllowed(origin) {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
