@@ -2,11 +2,103 @@ package main
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	mv "smsg/internal/api/middlewares"
+	"strconv"
+	"strings"
 )
+
+// path /teachers/id
+// path /teachers/
+type Teacher struct {
+	ID        int
+	FirstName string
+	LastName  string
+	Class     string
+	Subject   string
+}
+
+var (
+	teachers = make(map[int]Teacher)
+	// mutex = &sync.Mutex{}
+	nextID = 1
+)
+
+// Initialize some dummy data
+
+func init() {
+	teachers[nextID] = Teacher{
+		ID:        nextID,
+		FirstName: "Achyut",
+		LastName:  "Parajuli",
+		Class:     "9A",
+		Subject:   "DB",
+	}
+	nextID++
+	teachers[nextID] = Teacher{
+		ID:        nextID,
+		FirstName: "Jane",
+		LastName:  "Smith",
+		Class:     "10A",
+		Subject:   "Adv-DB",
+	}
+	nextID++
+	teachers[nextID] = Teacher{
+		ID:        nextID,
+		FirstName: "Jane",
+		LastName:  "Doe",
+		Class:     "11A",
+		Subject:   "Math",
+	}
+}
+
+func getTeachersHandler(w http.ResponseWriter, r *http.Request) {
+
+	path := strings.TrimPrefix(r.URL.Path, "/teachers/")
+	idStr := strings.TrimSuffix(path, "/")
+	fmt.Println(idStr)
+
+	if idStr == "" {
+		firstName := r.URL.Query().Get("first_name")
+		lastName := r.URL.Query().Get("last_name")
+
+		teacherList := make([]Teacher, 0, len(teachers))
+		for _, teacher := range teachers {
+			if (firstName == "" || teacher.FirstName == firstName) && (lastName == "" || teacher.LastName == lastName) {
+				teacherList = append(teacherList, teacher)
+			}
+		}
+		response := struct {
+			Status string    `json:"status"`
+			Count  int       `json:"count"`
+			Data   []Teacher `json:"data"`
+		}{
+			Status: "success",
+			Count:  len(teachers),
+			Data:   teacherList,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+	}
+
+	// handle path parameter
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	teacher, exists := teachers[id]
+	if !exists {
+		http.Error(w, "Teacher not found:", http.StatusNotFound)
+		return
+	}
+	json.NewEncoder(w).Encode(teacher)
+
+}
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintf(w, "Hello Root Route")
@@ -19,8 +111,8 @@ func teachersHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 
-		w.Write([]byte("Hello GET method on teachers route"))
-		// fmt.Println("Hello GET method on teachers route")
+		// call get method handler function
+		getTeachersHandler(w, r)
 
 	case http.MethodPost:
 		w.Write([]byte("Hello POST method on teachers route"))
