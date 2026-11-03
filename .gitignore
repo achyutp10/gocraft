@@ -31,7 +31,12 @@ go.work.sum
 .env
 sapi/env
 /*env
+smsg/*env
+smsg/.env
 /env
+smsg/cmd/api/*env
+smsg/cmd/api/.env
+sapi/cmd/api/env
 
 # Editor/IDE
 # .idea/
@@ -40,3 +45,7 @@ sapi/env
 sapi/key.pen
 sapi/cert.pen
 sapi/openssl.cnf
+
+smsg/key.pen
+smsg/cert.pen
+smsg/openssl.cnf
