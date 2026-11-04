@@ -15,9 +15,9 @@ import (
 
 func main() {
 
-	err := godotenv.Load()
+	err := godotenv.Load("D:/Important/Coding/GoL/prac/z-backend/smsg/cmd/api/.env")
 	if err != nil {
-		return
+		log.Fatal("Error loading .env file:", err)
 	}
 
 	_, err = sqlconnect.ConnectDb()
@@ -28,8 +28,8 @@ func main() {
 
 	port := os.Getenv("API_PORT")
 
-	cert := "cert.pem"
-	key := "key.pem"
+	cert := "D:/Important/Coding/GoL/prac/z-backend/smsg/cmd/api/cert.pem"
+	key := "D:/Important/Coding/GoL/prac/z-backend/smsg/cmd/api/key.pem"
 
 	tlsConfig := &tls.Config{
 		MinVersion: tls.VersionTLS12,
