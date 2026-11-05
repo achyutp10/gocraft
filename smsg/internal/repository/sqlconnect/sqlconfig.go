@@ -9,8 +9,6 @@ import (
 )
 
 func ConnectDb() (*sql.DB, error) {
-	fmt.Println("Trying to connect to Database...")
-
 	// err := godotenv.Load()
 	// if err != nil {
 	// 	return nil, err
@@ -18,18 +16,15 @@ func ConnectDb() (*sql.DB, error) {
 
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
-	dbPort := os.Getenv("DB_PORT")
+	dbname := os.Getenv("DB_NAME")
+	dbport := os.Getenv("DB_PORT")
 	host := os.Getenv("HOST")
-	// connectionString := "root:1234@tcp(127.0.0.1:3306)/" + dbName
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, dbPort, dbName)
+	// connectionString := "root:root@tcp(127.0.0.1:3306)/" + dbname
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, dbport, dbname)
 	db, err := sql.Open("mysql", connectionString)
-	// db, err := sql.Open("mysql", os.Getenv("CONNECTION_STRING"))
 	if err != nil {
 		// panic(err)
 		return nil, err
 	}
-	fmt.Println("Connected to maria db")
-
 	return db, nil
 }
