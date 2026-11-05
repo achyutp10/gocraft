@@ -1,0 +1,12 @@
+protoc --go_out=. proto/main.proto
+
+
+protoc -I=proto --go_out=. proto/main.proto proto/user/user.proto proto/order.proto
+
+
+
+source: https://github.com/protocolbuffers/protobuf/issues/2497
+
+"We dropped required fields in proto3 because required fields are generally considered harmful and violating protobuf's compatibility semantics. The whole idea of using protobuf is that it allows you to add/remove fields from your protocol definition while still being fully forward/backward compatible with newer/older binaries. Required fields break this though. You can never safely add a required field to a .proto definition, nor can you safely remove an existing required field because both of these actions break wire compatibility. For example, if you add a required field to a .proto definition, binaries built with the new definition won't be able to parse data serialized using the old definition because the required field is not present in old data. In a complex system where .proto definitions are shared widely across many different components of the system, adding/removing required fields could easily bring down multiple parts of the system. We have seen production issues caused by this multiple times and it's pretty much banned everywhere inside Google for anyone to add/remove required fields. For this reason we completely removed required fields in proto3.
+
+After the removal of "required", "optional" is just redundant so we removed "optional" as well."
