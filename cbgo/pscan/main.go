@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func scanPort(protocol, hostname string, port int) bool {
+func ScanPort(protocol, hostname string, port int) bool {
 	address := hostname + ":" + strconv.Itoa(port)
 	conn, err := net.DialTimeout(protocol, address, 60*time.Second)
 
@@ -22,10 +22,18 @@ func scanPort(protocol, hostname string, port int) bool {
 func main() {
 	fmt.Println("Port Scanning")
 	results := port.InitialScan("localhost")
-	fmt.Println(results)
+	for _, result := range results {
+		if result.State == "Open" {
+			fmt.Println(result.Port, result.State)
+		}
+	}
 
 	fmt.Println("=================================")
 
 	widescanresults := port.WideScan("localhost")
-	fmt.Println(widescanresults)
+	for _, result := range widescanresults {
+		if result.State == "Open" {
+			fmt.Println(result.Port, result.State)
+		}
+	}
 }
