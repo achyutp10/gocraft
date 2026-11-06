@@ -23,4 +23,9 @@ func main() {
 	fmt.Println("Port Scanning")
 	results := port.InitialScan("localhost")
 	fmt.Println(results)
+
+	fmt.Println("=================================")
+
+	widescanresults := port.WideScan("localhost")
+	fmt.Println(widescanresults)
 }
