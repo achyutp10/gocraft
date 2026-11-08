@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 
@@ -8,14 +9,16 @@ import (
 	"github.com/google/gopacket/pcap"
 )
 
-var DevName = "wlp3s0"
+var DevName = "Ethernet"
 var Found = false
 
 func main() {
 	// 1. find all network interfaces for packet capturing using pcap.FindAllDevs()
 	devices, err := pcap.FindAllDevs()
 	if err != nil {
-		log.Panic("Unable to fetch network interfacse")
+		// log.Panic("Unable to fetch network interfacse")
+		log.Fatalf("Unable to fetch network interfaces: %v", err)
+
 	}
 
 	for _, ifDev := range devices {
@@ -41,7 +44,7 @@ func main() {
 
 	// 4. Apply BPF (Berkely Packet Filter) on this new handle
 
-	if err := handle.SetBPFFilter("tcp and port 433"); err != nil {
+	if err := handle.SetBPFFilter("tcp and port 21"); err != nil {
 		log.Panic(err)
 	}
 
@@ -49,8 +52,37 @@ func main() {
 
 	source := gopacket.NewPacketSource(handle, handle.LinkType())
 
-	for packets := range source.Packets() {
-		fmt.Println(packets)
+	for packet := range source.Packets() {
+		appLayer := packet.ApplicationLayer()
+		if appLayer == nil {
+			continue
+		}
+		data := appLayer.Payload()
+		if bytes.Contains(data, []byte("USER")) || bytes.Contains(data, []byte("PASS")) {
+			fmt.Println(string(data))
+		}
+
+		// fmt.Println(packet)
 	}
 
 }
+
+// func main() {
+// 	devices, err := pcap.FindAllDevs()
+
+// 	if err != nil {
+// 		log.Fatalf("Unable to fetch network interfaces: %v", err)
+// 	}
+
+// 	fmt.Println("Available Network Interfaces:")
+
+// 	for i, device := range devices {
+// 		fmt.Printf("\nInterface %d\n", i+1)
+// 		fmt.Println("Name:", device.Name)
+// 		fmt.Println("Description:", device.Description)
+
+// 		for _, address := range device.Addresses {
+// 			fmt.Println("Address:", address.IP)
+// 		}
+// 	}
+// }
