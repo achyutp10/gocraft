@@ -50,6 +50,7 @@ func main() {
 	}
 
 	log.Println("Server running on port", cfg.AppPort)
+	log.Println("Server running go to http://localhost:8080/api/v1/notes")
 
 	err = server.ListenAndServe()
 
