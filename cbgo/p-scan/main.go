@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-func main() {
+func main1() {
 	for i := 1; i <= 1024; i++ {
 		address := fmt.Sprintf("scanme.nmap.org:%d", i)
 		conn, err := net.Dial("tcp", address)
