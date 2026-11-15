@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-func main() {
+func main2() {
 
 	for i := 1; i <= 1024; i++ {
 		go func(j int) {
