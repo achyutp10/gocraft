@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
@@ -45,5 +46,16 @@ func main() {
 			log.Fatalln("Unable to write data")
 		}
 		fmt.Printf("Wrote %d bytes to stdout\n", s)
+	}
+}
+
+func main1() {
+	var (
+		reader FooReader
+		writer FooWriter
+	)
+
+	if _, err := io.Copy(&writer, &reader); err != nil {
+		log.Fatalln("Unable to read/write data")
 	}
 }
